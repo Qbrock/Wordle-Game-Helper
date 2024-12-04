@@ -1,3 +1,5 @@
+package com.quinnbrockmyre.wordleproject.utils;
+
 import java.util.*;
 
 public class WordList { 
