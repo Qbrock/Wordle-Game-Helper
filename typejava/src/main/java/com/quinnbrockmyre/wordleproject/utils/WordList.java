@@ -2,12 +2,13 @@ package com.quinnbrockmyre.wordleproject.utils;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Objects;
 
 public class WordList { 
     /*A set of all 5 letter words */
     private final HashSet<String> possibleWords;
-    /*A map of yellow letters sorted by each Integer position, keys are nums 1-5, values are sets of each character that cannot be there */
+    /*A map of yellow letters sorted by each Integer position, keys are nums 1-5, values are sets of each character that cannot be there 
+     * ie: yellowMap.get(1) = [a, b, c] means that the second letter cannot be a, b, or c
+     */
     private final HashMap<Integer, HashSet<String>> yellowMap;
     /*An array of 5 letters representing the current green letters positions */
     private final String[] green;
@@ -35,8 +36,11 @@ public class WordList {
      * @param yellowLetters the array of a certain number of yellow letters
      */
     public void add(String[] yellowLetters) {
-        for(int i = 0; i <= yellowLetters.length; i++) {
-            if(!Objects.equals(yellowLetters[i], "_")) {
+        for(int i = 0; i < yellowLetters.length; i++) {
+            if(!yellowLetters[i].equals("_")) {
+                if(yellowMap.get(i) == null) {
+                    yellowMap.put(i, new HashSet<>());
+                }
                 yellowMap.get(i).add(yellowLetters[i]);
             }
         }
@@ -72,17 +76,20 @@ public class WordList {
 
     public HashSet<String> calculateWords() {
         HashSet<String> words = new HashSet<>();
+        System.out.println(yellowMap.get(1));
+
         for(String word : possibleWords) {
             boolean add = true;
             for(int i = 0; i < 5; i++) {
                 if(green[i] != null && !green[i].equals(word.substring(i, i+1))) {
-                    System.out.println(word.substring(i, i+1));
                     add = false;
                     break;
                 }
-                if(yellowMap.get(i) != null && yellowMap.get(i).contains(word.substring(i, i+1))) {
-                    add = false;
-                    break;
+                if(yellowMap.get(i) != null) {
+                    if(yellowMap.get(i).contains(word.substring(i, i+1))) {
+                        add = false;
+                        break;
+                    }
                 }
             }
             if(add) {
@@ -90,7 +97,9 @@ public class WordList {
             }
         }
 
-
+        // System.out.println(
+        //     "The possible words are: " + words.size() + "\n" + words
+        // );
         return words;
     }
 }

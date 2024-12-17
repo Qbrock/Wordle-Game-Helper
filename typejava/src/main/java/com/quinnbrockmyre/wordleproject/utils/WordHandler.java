@@ -73,13 +73,11 @@ public class WordHandler {
      */
     public static void possibleWords(WordList words) throws IOException{
         HashSet<String> used_words = Used_Words();
-        File file = new File("src/sgb-words.txt");
+        File file = new File("typejava/src/main/resources/sgb-words.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String st;
             while ((st = br.readLine()) != null) {
-                if(!used_words.contains(st)) {
-                    words.add(st);
-                }
+                if(st.length() == 5 && !used_words.contains(st)){words.add(st);}
             }
         }
     }
@@ -103,7 +101,7 @@ public class WordHandler {
      */
     public static void getYellows(Scanner sc, WordList MyList) {
         int num_of_yellows = Integer.parseInt(sc.nextLine());
-        for(int i = 1; i <= num_of_yellows; i++) {
+        for(int i = 0; i < num_of_yellows; i++) {
             System.out.println("In 5 chars, enter the letter for each place it is yellow, and a _ each place it is not.");
             String[] temp = sc.nextLine().split("");
             MyList.add(temp);
