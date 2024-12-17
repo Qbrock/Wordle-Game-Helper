@@ -1,6 +1,8 @@
 package com.quinnbrockmyre.wordleproject.utils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Objects;
 
 public class WordList { 
     /*A set of all 5 letter words */
@@ -33,7 +35,7 @@ public class WordList {
      * @param yellowLetters the array of a certain number of yellow letters
      */
     public void add(String[] yellowLetters) {
-        for(int i = 1; i <= yellowLetters.length; i++) {
+        for(int i = 0; i <= yellowLetters.length; i++) {
             if(!Objects.equals(yellowLetters[i], "_")) {
                 yellowMap.get(i).add(yellowLetters[i]);
             }
@@ -66,5 +68,29 @@ public class WordList {
             builder.append(word).append("\n");
         }
         return builder.toString();
+    }
+
+    public HashSet<String> calculateWords() {
+        HashSet<String> words = new HashSet<>();
+        for(String word : possibleWords) {
+            boolean add = true;
+            for(int i = 0; i < 5; i++) {
+                if(green[i] != null && !green[i].equals(word.substring(i, i+1))) {
+                    System.out.println(word.substring(i, i+1));
+                    add = false;
+                    break;
+                }
+                if(yellowMap.get(i) != null && yellowMap.get(i).contains(word.substring(i, i+1))) {
+                    add = false;
+                    break;
+                }
+            }
+            if(add) {
+                words.add(word);
+            }
+        }
+
+
+        return words;
     }
 }

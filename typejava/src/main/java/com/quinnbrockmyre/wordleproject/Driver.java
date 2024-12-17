@@ -1,6 +1,9 @@
 package com.quinnbrockmyre.wordleproject;
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.util.Scanner;
+
+import com.quinnbrockmyre.wordleproject.utils.WordHandler;
+import com.quinnbrockmyre.wordleproject.utils.WordList;
 public class Driver {
     /**
      * Main driver method for running the WordleHelper
@@ -27,6 +30,7 @@ public class Driver {
         System.out.println("Enter the letters that are green so far (not separated by spaces) and use underscores for empty slots: ");
         WordHandler.getGreens(sc, MyList);
 
+        MyList.calculateWords();
 
     }
 }

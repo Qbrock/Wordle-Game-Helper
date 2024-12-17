@@ -1,8 +1,15 @@
 package com.quinnbrockmyre.wordleproject.utils;
 
-import java.io.*;
-import java.net.URL; 
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class WordHandler {
     /**
@@ -20,7 +27,7 @@ public class WordHandler {
             cal.setTime(date);
             int day = cal.get(Calendar.DAY_OF_MONTH);
             String inputLine, last_input, most_recent_word = "";
-            int day_of_month = 0;
+            int day_of_month;
             boolean updated = false;
             while ((inputLine = in.readLine()) != null) {
                 if(inputLine.contains("Below you can find our list of the most recent previous Wordle solutions, both so you can see what Wordle is all about, and so you know which words to avoid guessing for future Wordles.")) {
@@ -67,14 +74,14 @@ public class WordHandler {
     public static void possibleWords(WordList words) throws IOException{
         HashSet<String> used_words = Used_Words();
         File file = new File("src/sgb-words.txt");
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String st;
-        while ((st = br.readLine()) != null) {
-            if(!used_words.contains(st)) {
-                words.add(st);
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String st;
+            while ((st = br.readLine()) != null) {
+                if(!used_words.contains(st)) {
+                    words.add(st);
+                }
             }
         }
-        br.close();
     }
 
     /**
