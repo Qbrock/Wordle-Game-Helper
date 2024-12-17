@@ -21,15 +21,16 @@ public class Driver {
         }
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the grey letters that have been used so far (not separated by spaces): ");
+        // System.out.println("Enter the grey letters that have been used so far (not separated by spaces): ");
         // String[] greys = WordHandler.getGreys(sc);
 
-        System.out.println("How many different yellow letters do you have?");
+        // System.out.println("How many different yellow letters do you have?");
         // WordHandler.getYellows(sc, MyList);
-        MyList.add(new String[] {"_", "b", "_", "_", "_"});
 
-        System.out.println("Enter the letters that are green so far (not separated by spaces) and use underscores for empty slots: ");
+        // System.out.println("Enter the letters that are green so far (not separated by spaces) and use underscores for empty slots: ");
         // WordHandler.getGreens(sc, MyList);
+        MyList.add(new String[] {"_", "b", "_", "_", "_"});
+        
         MyList.addGreen("a", 0);
 
         MyList.calculateWords();

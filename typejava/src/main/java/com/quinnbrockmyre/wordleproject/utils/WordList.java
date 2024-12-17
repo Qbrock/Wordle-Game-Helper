@@ -10,6 +10,10 @@ public class WordList {
      * ie: yellowMap.get(1) = [a, b, c] means that the second letter cannot be a, b, or c
      */
     private final HashMap<Integer, HashSet<String>> yellowMap;
+    /*A treeSet of the expected letters, using treeSet for unique 
+     * ie: yellowLetters = [a, b, c] means that the word has to contain a, b, and c
+    */
+    private final HashSet<String> yellowLetters;
     /*An array of 5 letters representing the current green letters positions */
     private final String[] green;
     /*Constructor for the class */
@@ -17,6 +21,7 @@ public class WordList {
         this.green = new String[5];
         this.possibleWords = new HashSet<>();
         this.yellowMap = new HashMap<>();
+        this.yellowLetters = new HashSet<>();
     }
 
     /**
@@ -38,6 +43,7 @@ public class WordList {
     public void add(String[] yellowLetters) {
         for(int i = 0; i < yellowLetters.length; i++) {
             if(!yellowLetters[i].equals("_")) {
+                this.yellowLetters.add(yellowLetters[i].toLowerCase());
                 if(yellowMap.get(i) == null) {
                     yellowMap.put(i, new HashSet<>());
                 }
@@ -76,30 +82,35 @@ public class WordList {
 
     public HashSet<String> calculateWords() {
         HashSet<String> words = new HashSet<>();
-        System.out.println(yellowMap.get(1));
+        System.out.println(yellowLetters);
 
         for(String word : possibleWords) {
             boolean add = true;
+            HashSet<String> otherYellowLetters = new HashSet<>(this.yellowLetters);
             for(int i = 0; i < 5; i++) {
-                if(green[i] != null && !green[i].equals(word.substring(i, i+1))) {
+                String currentLetter = word.substring(i, i+1);
+                if(green[i] != null && !green[i].equals(currentLetter)) {
                     add = false;
                     break;
                 }
-                if(yellowMap.get(i) != null) {
-                    if(yellowMap.get(i).contains(word.substring(i, i+1))) {
-                        add = false;
-                        break;
-                    }
+                if(yellowMap.get(i) != null && yellowMap.get(i).contains(currentLetter)) {
+                    add = false;
+                    break;
+                }
+                //removing the letter from the yellowLetters set if it is in the word
+                if(otherYellowLetters.contains(currentLetter)) {
+                    otherYellowLetters.remove(currentLetter);
+                    break;
                 }
             }
-            if(add) {
+            if(add && otherYellowLetters.isEmpty()) {
                 words.add(word);
             }
         }
 
-        // System.out.println(
-        //     "The possible words are: " + words.size() + "\n" + words
-        // );
+        System.out.println(
+            "The possible words are: " + words.size() + "\n" + words
+        );
         return words;
     }
 }
