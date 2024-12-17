@@ -1,5 +1,6 @@
 package com.quinnbrockmyre.wordleproject;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Scanner;
 
 import com.quinnbrockmyre.wordleproject.utils.WordHandler;
@@ -29,11 +30,14 @@ public class Driver {
 
         // System.out.println("Enter the letters that are green so far (not separated by spaces) and use underscores for empty slots: ");
         // WordHandler.getGreens(sc, MyList);
+        HashSet<String> greys = new HashSet<>();
+        greys.add("m");
+        greys.add("e");
         MyList.add(new String[] {"_", "b", "_", "_", "_"});
         
         MyList.addGreen("a", 0);
 
-        MyList.calculateWords();
+        MyList.calculateWords(greys);
 
     }
 }

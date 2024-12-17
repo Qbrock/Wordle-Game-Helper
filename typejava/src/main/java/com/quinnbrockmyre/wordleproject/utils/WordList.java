@@ -80,15 +80,17 @@ public class WordList {
         return builder.toString();
     }
 
-    public HashSet<String> calculateWords() {
+    public HashSet<String> calculateWords(HashSet<String> greys) {
         HashSet<String> words = new HashSet<>();
-        System.out.println(yellowLetters);
-
         for(String word : possibleWords) {
             boolean add = true;
             HashSet<String> otherYellowLetters = new HashSet<>(this.yellowLetters);
             for(int i = 0; i < 5; i++) {
                 String currentLetter = word.substring(i, i+1);
+                if(greys != null && greys.contains(currentLetter)) {
+                    add = false;
+                    break;
+                }
                 if(green[i] != null && !green[i].equals(currentLetter)) {
                     add = false;
                     break;
@@ -107,10 +109,7 @@ public class WordList {
                 words.add(word);
             }
         }
-
-        System.out.println(
-            "The possible words are: " + words.size() + "\n" + words
-        );
+        System.out.println(words);
         return words;
     }
 }

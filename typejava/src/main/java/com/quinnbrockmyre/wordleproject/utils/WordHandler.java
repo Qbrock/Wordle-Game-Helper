@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -88,9 +89,11 @@ public class WordHandler {
      * @param sc scanner to use
      * @return returns array of grey letters
      */
-    public static String[] getGreys(Scanner sc) {
+    public static HashSet<String> getGreys(Scanner sc) {
         String letters = sc.nextLine();
-        return letters.split("");
+        HashSet<String> greyLetters = new HashSet<>();
+        greyLetters.addAll(Arrays.asList(letters.split("")));
+        return greyLetters;
     }
 
     /**
