@@ -41,9 +41,9 @@ public class Driver {
         MyList.addGreen("o", 2);
         MyList.add(new String[] { "_", "o", "_", "_", "_" });
 
-        // boolean result = MyList.calculate("chose");
-        // System.out.println(result);
-        System.out.println("Here are the possible words: ");
-        MyList.printWords(MyList.getWords());
+        boolean result = MyList.calculate("proms");
+        System.out.println(result);
+        // System.out.println("Here are the possible words: ");
+        // MyList.printWords(MyList.getWords());
     }
 }
