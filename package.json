@@ -1,0 +1,26 @@
+{
+  "name": "wordle-game-helper",
+  "version": "1.0.0",
+  "description": "A helper program for the hit game wordle. Does not give you answer but all possible answers based on user input and possible 5 letter words that have not been used.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qbrock/Wordle-Game-Helper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Qbrock/Wordle-Game-Helper/issues"
+  },
+  "homepage": "https://github.com/Qbrock/Wordle-Game-Helper#readme",
+  "dependencies": {
+    "next": "^15.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
