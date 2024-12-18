@@ -1,8 +1,7 @@
 package com.quinnbrockmyre.wordleproject;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Scanner;
 
 import com.quinnbrockmyre.wordleproject.utils.WordHandler;
 import com.quinnbrockmyre.wordleproject.utils.WordList;
