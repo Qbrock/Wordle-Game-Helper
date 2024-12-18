@@ -104,7 +104,6 @@ public class WordList {
             //removing the letter from the yellowLetters set if it is in the word
             if(otherYellowLetters.contains(currentLetter)) {
                 otherYellowLetters.remove(currentLetter);
-                break;
             }
         }
         if(!otherYellowLetters.isEmpty()) {
