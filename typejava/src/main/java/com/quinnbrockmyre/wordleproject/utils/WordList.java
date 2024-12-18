@@ -4,22 +4,27 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class WordList { 
-    /*A set of all 5 letter words */
+public class WordList {
+    /* A set of all 5 letter words */
     private final HashSet<String> possibleWords;
-    /*A map of yellow letters sorted by each Integer position, keys are nums 1-5, values are sets of each character that cannot be there 
-     * ie: yellowMap.get(1) = [a, b, c] means that the second letter cannot be a, b, or c
+    /*
+     * A map of yellow letters sorted by each Integer position, keys are nums 1-5,
+     * values are sets of each character that cannot be there
+     * ie: yellowMap.get(1) = [a, b, c] means that the second letter cannot be a, b,
+     * or c
      */
     private final HashMap<Integer, HashSet<String>> yellowMap;
-    /*A treeSet of the expected letters, using treeSet for unique 
+    /*
+     * A treeSet of the expected letters, using treeSet for unique
      * ie: yellowLetters = [a, b, c] means that the word has to contain a, b, and c
-    */
+     */
     private final HashSet<String> yellowLetters;
-    /*An array of 5 letters representing the current green letters positions */
+    /* An array of 5 letters representing the current green letters positions */
     private final String[] green;
-    /*A set of all the grey letters */
+    /* A set of all the grey letters */
     private final HashSet<String> greys;
-    /*Constructor for the class */
+
+    /* Constructor for the class */
     public WordList() {
         this.green = new String[5];
         this.possibleWords = new HashSet<>();
@@ -33,7 +38,7 @@ public class WordList {
      * does not take a char but a string for each letter
      * 
      * @param letter the letter to add
-     * @param i the postition
+     * @param i      the postition
      */
     public void addGreen(String letter, int i) {
         green[i] = letter;
@@ -45,10 +50,10 @@ public class WordList {
      * @param yellowLetters the array of a certain number of yellow letters
      */
     public void add(String[] yellowLetters) {
-        for(int i = 0; i < yellowLetters.length; i++) {
-            if(!yellowLetters[i].equals("_")) {
+        for (int i = 0; i < yellowLetters.length; i++) {
+            if (!yellowLetters[i].equals("_")) {
                 this.yellowLetters.add(yellowLetters[i].toLowerCase());
-                if(yellowMap.get(i) == null) {
+                if (yellowMap.get(i) == null) {
                     yellowMap.put(i, new HashSet<>());
                 }
                 yellowMap.get(i).add(yellowLetters[i]);
@@ -74,11 +79,10 @@ public class WordList {
         return possibleWords.size();
     }
 
-
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        for(String word : possibleWords) {
+        for (String word : possibleWords) {
             builder.append(word).append("\n");
         }
         return builder.toString();
@@ -87,36 +91,42 @@ public class WordList {
     public boolean calculate(String word) {
         HashSet<String> otherYellowLetters = new HashSet<>(this.yellowLetters);
         boolean add = true;
-        for(int i = 0; i < 5; i++) {
-            String currentLetter = word.substring(i, i+1);
-            if(greys.contains(currentLetter)) {
+        for (int i = 0; i < 5; i++) {
+            // System.out.println(i);
+            String currentLetter = word.substring(i, i + 1);
+            // System.out.println(currentLetter);
+            if (greys.contains(currentLetter)) {
                 add = false;
                 break;
             }
-            if(green[i] != null && !green[i].equals(currentLetter)) {
+            // System.out.println("GREY PASSED");
+            if (green[i] != null && !green[i].equals(currentLetter)) {
                 add = false;
                 break;
             }
-            if(yellowMap.get(i) != null && yellowMap.get(i).contains(currentLetter)) {
+            // System.out.println("GREEN PASSED");
+            if (yellowMap.get(i) != null && yellowMap.get(i).contains(currentLetter)) {
                 add = false;
                 break;
             }
-            //removing the letter from the yellowLetters set if it is in the word
-            if(otherYellowLetters.contains(currentLetter)) {
+            // System.out.println("YELLOW PASSED");
+            // removing the letter from the yellowLetters set if it is in the word
+            if (otherYellowLetters.contains(currentLetter) && green[i] == null) {
                 otherYellowLetters.remove(currentLetter);
             }
         }
-        if(!otherYellowLetters.isEmpty()) {
+        if (!otherYellowLetters.isEmpty()) {
             add = false;
+            // System.out.println("FINAL NOT PASSED");
         }
         return add;
     }
 
     public HashSet<String> getWords() {
         HashSet<String> words = new HashSet<>();
-        for(String word : possibleWords) {
+        for (String word : possibleWords) {
             boolean add = calculate(word);
-            if(add) {
+            if (add) {
                 words.add(word);
             }
         }
