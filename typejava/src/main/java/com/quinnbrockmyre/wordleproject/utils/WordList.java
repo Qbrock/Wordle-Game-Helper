@@ -2,6 +2,7 @@ package com.quinnbrockmyre.wordleproject.utils;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 public class WordList { 
     /*A set of all 5 letter words */
@@ -16,12 +17,15 @@ public class WordList {
     private final HashSet<String> yellowLetters;
     /*An array of 5 letters representing the current green letters positions */
     private final String[] green;
+    /*A set of all the grey letters */
+    private final HashSet<String> greys;
     /*Constructor for the class */
     public WordList() {
         this.green = new String[5];
         this.possibleWords = new HashSet<>();
         this.yellowMap = new HashMap<>();
         this.yellowLetters = new HashSet<>();
+        this.greys = new HashSet<>();
     }
 
     /**
@@ -80,36 +84,56 @@ public class WordList {
         return builder.toString();
     }
 
-    public HashSet<String> calculateWords(HashSet<String> greys) {
+    public boolean calculate(String word) {
+        HashSet<String> otherYellowLetters = new HashSet<>(this.yellowLetters);
+        boolean add = true;
+        for(int i = 0; i < 5; i++) {
+            String currentLetter = word.substring(i, i+1);
+            if(greys.contains(currentLetter)) {
+                add = false;
+                break;
+            }
+            if(green[i] != null && !green[i].equals(currentLetter)) {
+                add = false;
+                break;
+            }
+            if(yellowMap.get(i) != null && yellowMap.get(i).contains(currentLetter)) {
+                add = false;
+                break;
+            }
+            //removing the letter from the yellowLetters set if it is in the word
+            if(otherYellowLetters.contains(currentLetter)) {
+                otherYellowLetters.remove(currentLetter);
+                break;
+            }
+        }
+        if(!otherYellowLetters.isEmpty()) {
+            add = false;
+        }
+        return add;
+    }
+
+    public HashSet<String> getWords() {
         HashSet<String> words = new HashSet<>();
         for(String word : possibleWords) {
-            boolean add = true;
-            HashSet<String> otherYellowLetters = new HashSet<>(this.yellowLetters);
-            for(int i = 0; i < 5; i++) {
-                String currentLetter = word.substring(i, i+1);
-                if(greys != null && greys.contains(currentLetter)) {
-                    add = false;
-                    break;
-                }
-                if(green[i] != null && !green[i].equals(currentLetter)) {
-                    add = false;
-                    break;
-                }
-                if(yellowMap.get(i) != null && yellowMap.get(i).contains(currentLetter)) {
-                    add = false;
-                    break;
-                }
-                //removing the letter from the yellowLetters set if it is in the word
-                if(otherYellowLetters.contains(currentLetter)) {
-                    otherYellowLetters.remove(currentLetter);
-                    break;
-                }
-            }
-            if(add && otherYellowLetters.isEmpty()) {
+            boolean add = calculate(word);
+            if(add) {
                 words.add(word);
             }
         }
-        System.out.println(words);
         return words;
+
+    }
+
+    public void printWords(HashSet<String> possibleWords) {
+        possibleWords.stream().sorted().forEach(System.out::println);
+    }
+
+    public void addGrey(List<String> greyLetters) {
+        greys.addAll(greyLetters);
+    }
+
+    public String[] getGreen() {
+        return green;
     }
 }

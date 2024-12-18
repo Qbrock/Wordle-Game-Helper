@@ -89,11 +89,9 @@ public class WordHandler {
      * @param sc scanner to use
      * @return returns array of grey letters
      */
-    public static HashSet<String> getGreys(Scanner sc) {
+    public static void getGreys(Scanner sc, WordList MyList) {
         String letters = sc.nextLine();
-        HashSet<String> greyLetters = new HashSet<>();
-        greyLetters.addAll(Arrays.asList(letters.split("")));
-        return greyLetters;
+        MyList.addGrey(Arrays.asList(letters.split("")));
     }
 
     /**

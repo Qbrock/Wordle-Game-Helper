@@ -1,7 +1,7 @@
 package com.quinnbrockmyre.wordleproject;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.Arrays;
+import java.util.List;
 
 import com.quinnbrockmyre.wordleproject.utils.WordHandler;
 import com.quinnbrockmyre.wordleproject.utils.WordList;
@@ -21,23 +21,25 @@ public class Driver {
             System.out.println("IOError, " + e);
         }
 
-        Scanner sc = new Scanner(System.in);
-        // System.out.println("Enter the grey letters that have been used so far (not separated by spaces): ");
-        // String[] greys = WordHandler.getGreys(sc);
+        // try (Scanner sc = new Scanner(System.in)) {
+        //     System.out.println("Enter the grey letters that have been used so far (not separated by spaces): ");
+        //     WordHandler.getGreys(sc, MyList);
+            
+        //     System.out.println("How many different yellow letters do you have?");
+        //     WordHandler.getYellows(sc, MyList);
+            
+        //     System.out.println("Enter the letters that are green so far (not separated by spaces) and use underscores for empty slots: ");
+        //     WordHandler.getGreens(sc, MyList);
+        // }
 
-        // System.out.println("How many different yellow letters do you have?");
-        // WordHandler.getYellows(sc, MyList);
+        List<String> greys = Arrays.asList("a", "d", "i", "u", "e", "k", "n", "t");
+        MyList.addGrey(greys);
+        MyList.addGreen("o", 2);
+        MyList.add(new String[] {"_", "_", "_", "_", "s"});
 
-        // System.out.println("Enter the letters that are green so far (not separated by spaces) and use underscores for empty slots: ");
-        // WordHandler.getGreens(sc, MyList);
-        HashSet<String> greys = new HashSet<>();
-        greys.add("m");
-        greys.add("e");
-        MyList.add(new String[] {"_", "b", "_", "_", "_"});
-        
-        MyList.addGreen("a", 0);
-
-        MyList.calculateWords(greys);
-
+        boolean result = MyList.calculate("chose");
+        System.out.println(result);
+        // System.out.println("Here are the possible words: ");
+        // MyList.printWords(MyList.getWords());
     }
 }
